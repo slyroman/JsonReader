@@ -12,6 +12,7 @@ object JsonReader extends  App {
     .config("spark.testing.memory", "471859200")
     .getOrCreate()
 
+  /*
   case class Wine(
 
                    id: Int,
@@ -21,7 +22,7 @@ object JsonReader extends  App {
                    variety: String,
                    winery: String
 
-                 )
+                 )*/
 
   def sc = spark.sparkContext
   val lines = sc.textFile(args(0).toString)
