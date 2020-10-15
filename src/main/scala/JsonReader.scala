@@ -12,33 +12,28 @@ object JsonReader extends  App {
     .config("spark.testing.memory", "471859200")
     .getOrCreate()
 
-  /*
+
   case class Wine(
 
-                   id: Int,
-                   country: String,
-                   points: Int,
-                   title: String,
-                   variety: String,
-                   winery: String
+                   id: Option[Int],
+                   country: Option[String],
+                   points: Option[Int],
+                   title: Option[String],
+                   variety: Option[String],
+                   winery: Option[String]
 
-                 )*/
+                 )
 
   def sc = spark.sparkContext
   val lines = sc.textFile(args(0).toString)
+
   import org.json4s._
   import org.json4s.jackson.JsonMethods._
 
   implicit val formats = DefaultFormats
-  lines.map{ row =>
-    val json_row = parse(row)
-    //.extract[Wine]
-    (compact(json_row \ "id"), compact(json_row \ "country"), compact(json_row \ "points"), compact(json_row \ "title"),
-      compact(json_row \ "variety"), compact(json_row \ "winery"))
-      .toString
-  }
-    .collect()
-    .foreach{println _}
 
+    lines
+    .foreach(line => println( parse(line).extract[Wine] ))
+    //.collect().foreach(println)
 
 }
