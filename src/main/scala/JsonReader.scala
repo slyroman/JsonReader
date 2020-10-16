@@ -15,12 +15,12 @@ object JsonReader extends  App {
 
   case class Wine(
 
-                   id: Option[Int],
-                   country: Option[String],
-                   points: Option[Int],
-                   title: Option[String],
-                   variety: Option[String],
-                   winery: Option[String]
+                   id: Option[Int] = None,
+                   country: Option[String]= None,
+                   points: Option[Int]= None,
+                   title: Option[String]= None,
+                   variety: Option[String]= None,
+                   winery: Option[String]= None
 
                  )
 
@@ -33,7 +33,9 @@ object JsonReader extends  App {
   implicit val formats = DefaultFormats
 
     lines
-    .foreach(line => println( parse(line).extract[Wine] ))
+    .foreach(line => println(
+      parse(line).extract[Wine].toString
+    ))
     //.collect().foreach(println)
 
 }
