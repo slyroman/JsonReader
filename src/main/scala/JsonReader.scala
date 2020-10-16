@@ -33,9 +33,16 @@ object JsonReader extends  App {
   implicit val formats = DefaultFormats
 
     lines
-    .foreach(line => println(
-      parse(line).extract[Wine].toString
-    ))
+    .foreach(line => {
+      val z = parse(line).extract[Wine]//.id.toString
+      println( z.productIterator.map {
+        case Some(x) => x
+        case None => "---"
+        case x => x // only needed if you would have non optional values
+      }.mkString(", ")
+       )
+    }
+    )
     //.collect().foreach(println)
 
 }
